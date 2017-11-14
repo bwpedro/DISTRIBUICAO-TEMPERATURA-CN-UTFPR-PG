@@ -3,7 +3,7 @@
 
 int main(){
     int n, nInteracao = 1; 
-    float tol, max = 0, maxAnt = 0, dif = 0;
+    float tol, difAnt = 0, dif = 0;
     printf("Valor de n: ");
     scanf("%d",&n);
     printf("Valor da tolerância: ");
@@ -11,7 +11,7 @@ int main(){
 
     n = n - 1;
 
-    float m0[n][n], m1[n][n], mMax[n][n];
+    float m0[n][n], m1[n][n], mDif[n][n];
 
     // inicializa vetor com 0
     for(int i=0;i<n;i++){
@@ -28,27 +28,33 @@ int main(){
                 m0[i][j] = m1[i][j];
             }
         }
-        
+        dif = 0;
         // calcula o valor para todos os pontos
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
                 m1[i][j] = calculaMedia(n, m0, i, j);
-                if(m0[i][j] >= m1[i][j])
-                    mMax[i][j] = m0[i][j];
-                else
-                    mMax[i][j] = m1[i][j];
-                if(mMax[i][j] > max)
-                    max = mMax[i][j]; 
+                mDif[i][j] = m1[i][j] - m0[i][j];
+
+                if(mDif[i][j] > dif)
+                    dif = mDif[i][j];
             }
         }
         printf("\n%d˚ Interação:\n",nInteracao++);
-        printf("Máximo anterior: %f\n",maxAnt);
-        printf("Máximo atual: %f\n",max);
+        printf("Tolerância anterior: %f\n",difAnt);
         printf("Tolerância atual: %f\n",dif);
         printf("Tolerância desejada: %f\n",tol);
-        dif = max - maxAnt;
-        maxAnt = max;
+        difAnt = dif;
     } while(dif > tol);
 
+    printf("\n");
+
+
+    printf("Valores dos pontos na última interação: \n");
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            printf("%f ",m1[i][j]);
+        }
+        printf("\n");
+    }
     printf("\n");
 }
