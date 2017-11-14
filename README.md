@@ -4,4 +4,5 @@ Este repositório contém o projeto de distribuição de temperatura em um conju
 Para rodar: 
 
 ...$ gcc main.c projeto.c
+
 ...$ ./a.out
